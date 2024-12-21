@@ -12,58 +12,97 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 public class ProductsScreen extends PageObject {
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"com.saucelabs.mydemoapp.android:id/productTV\"]")
-    private WebElement allProducts;
+    public WebElement ProductsTXT;
 
-    private String productByName = "//android.widget.ImageView[@content-desc='%s']";
+    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Sauce Labs Backpack\"]")
+    public WebElement SauceLabsBackPack;
 
-    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Increase item quantity\"]")
-    private WebElement btnIncreaseQuantity;
+    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Sauce Labs Bike Light\"]")
+    public WebElement SauceLabsBikeLight;
 
-    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc=\"Tap to add product to cart\"]")
-    private WebElement btnAddToCart;
+    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Sauce Labs Bolt T-Shirt\"]")
+    public WebElement SauceLabsBoltTShirt;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id=\"com.saucelabs.mydemoapp.android:id/cartTV\"]")
-    private WebElement btnCartBadge;
+    @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Sauce Labs Fleece Jacket\"]")
+    public WebElement SauceLabsFleecejacket;
 
-    public boolean isProductGalleryDisplayed() {
-        waitFor(ExpectedConditions.visibilityOf(allProducts));
-        return allProducts.isDisplayed();
+
+
+    public boolean validarApp(){
+        waitFor(ExpectedConditions.visibilityOf(ProductsTXT));
+        return ProductsTXT.isDisplayed();
     }
 
-    public void selectProduct(String productName) {
-        String productXPath = String.format(productByName, productName);
-        WebElement product = null;
+    public boolean validarProductos(){
 
-        try {
-            product = findBy(productXPath);
-            waitFor(ExpectedConditions.visibilityOf(product));
-            product.click();
-        } catch (NoSuchElementException e) {
-            // Si el producto no se encuentra, registramos el error y lo reportamos
-            throw new NoSuchElementException("Product not found: " + productName);
-        } catch (WebDriverException e) {
-            // Si hay un error relacionado con el WebDriver (por ejemplo, un crash de la app)
-            throw new WebDriverException("Error during click on product: " + productName, e);
-        } catch (Exception e) {
-            // Cualquier otro error inesperado
-            throw new RuntimeException("Unexpected error during product selection: " + productName, e);
+
+
+        boolean todosDisponibles = true;
+        if (SauceLabsBackPack.isEnabled())
+        {
+            System.out.println("Esta disponible primer elemento");
+        }
+        else
+        {
+            System.out.println("No disponible primer elemento");
+            todosDisponibles = false;
+        }
+
+        if (SauceLabsBikeLight.isEnabled())
+        {
+            System.out.println("Esta disponible segundo elemento");
+        }
+        else
+        {
+            System.out.println("No disponible segundo elemento");
+            todosDisponibles = false;
+        }
+
+        if (SauceLabsBoltTShirt.isEnabled())
+        {
+            System.out.println("Esta disponible tercero elemento");
+        }
+        else
+        {
+            System.out.println("No disponible tercero elemento");
+            todosDisponibles = false;
+        }
+
+        if (SauceLabsFleecejacket.isEnabled())
+        {
+            System.out.println("Esta disponible cuarto elemento");
+        }
+        else
+        {
+            System.out.println("No disponible cuarto elemento");
+            todosDisponibles = false;
+        }
+
+        return todosDisponibles;
+
+
+    }
+
+    public void selectProduct(String product) {
+        switch (product) {
+            case "Sauce Labs Backpack":
+                SauceLabsBackPack.click();
+                break;
+            case "Sauce Labs Bike Light":
+                SauceLabsBikeLight.click();
+                break;
+            case "Sauce Labs Bolt T-Shirt":
+                SauceLabsBoltTShirt.click();
+                break;
+            case "Sauce Labs Fleece Jacket":
+                SauceLabsFleecejacket.click();
+                break;
+            default:
+                System.out.println("Producto no encontrado: " + product);
+                break;
         }
     }
 
-    public void increaseQuantity() {
-
-        btnIncreaseQuantity.click();
-    }
-
-    public void addToCart() {
-
-        btnAddToCart.click();
-    }
-
-    public int getCartQuantity() {
-        String quantityText = btnCartBadge.getText();
-        return Integer.parseInt(quantityText);
-    }
 }
 
 
