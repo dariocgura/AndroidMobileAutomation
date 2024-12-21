@@ -4,9 +4,11 @@ package com.nttdata.screens;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import net.serenitybdd.core.pages.PageObject;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import com.nttdata.utils.WaitUtils;
 
 
 public class ProductsScreen extends PageObject {
@@ -26,10 +28,16 @@ public class ProductsScreen extends PageObject {
     @AndroidFindBy(xpath = "//android.widget.ImageView[@content-desc=\"Sauce Labs Fleece Jacket\"]")
     public WebElement SauceLabsFleecejacket;
 
+    private WaitUtils waitUtils;
+    public ProductsScreen() {
+        waitUtils = new WaitUtils(getDriver(), 10);
+    }
+
+
 
 
     public boolean validarApp(){
-        waitFor(ExpectedConditions.visibilityOf(ProductsTXT));
+        waitUtils.setImplicitWait(10);
         return ProductsTXT.isDisplayed();
     }
 

@@ -4,6 +4,7 @@ import com.nttdata.screens.CarScreen;
 import com.nttdata.screens.ProductsScreen;
 import com.nttdata.screens.SpecificProductScreen;
 import org.junit.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ShopSteps {
 
@@ -28,6 +29,7 @@ public class ShopSteps {
 //Selecciona e ingresa el producto
 
     public void selectAndAdd(int unidades, String producto){
+
         productsScreen.selectProduct(producto);
 
         specificProductScreen.addProduct(unidades);
